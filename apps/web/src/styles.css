@@ -82,7 +82,7 @@ body {
 
 .status {
   color: #374151;
-  margin: 0 0 16px;
+  margin: 8px 0 16px;
 }
 
 .status-error {
@@ -98,6 +98,74 @@ body {
 
 .result-meta p {
   margin: 0;
+}
+
+.chart-panel {
+  margin-bottom: 16px;
+}
+
+.chart-panel h2 {
+  font-size: 1rem;
+  margin: 0 0 10px;
+}
+
+.chart-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  min-height: 340px;
+  padding: 8px;
+}
+
+.chart-empty {
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  color: #475569;
+  padding: 14px;
+}
+
+.chart-fallback {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #991b1b;
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+.chart-skeleton {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.skeleton-title,
+.skeleton-plot {
+  animation: pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+}
+
+.skeleton-title {
+  height: 18px;
+  margin-bottom: 12px;
+  width: 180px;
+}
+
+.skeleton-plot {
+  height: 320px;
+  width: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .table-wrap {

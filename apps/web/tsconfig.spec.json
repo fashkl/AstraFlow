@@ -1,12 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "lib": ["ES2022", "DOM"],
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noEmit": true,
     "target": "ES2022",
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "react", "react-dom"]
   },
-  "include": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": ["src/**/*.spec.ts", "src/**/*.spec.tsx", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }

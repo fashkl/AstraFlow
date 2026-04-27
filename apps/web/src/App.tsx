@@ -2,6 +2,9 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import type { WeatherQuery } from '@livecoding/shared';
 import { type FormEvent, useMemo, useState } from 'react';
 import { fetchWeather, WeatherApiError } from './api/weather-client';
+import { ChartErrorBoundary } from './components/chart-error-boundary';
+import { ChartSkeleton } from './components/chart-skeleton';
+import { WeatherChart } from './components/weather-chart';
 
 const PAGE_SIZE_OPTIONS = [25, 50, 100, 200] as const;
 
@@ -109,7 +112,7 @@ export default function App() {
         </form>
       </section>
 
-      {weatherQuery.isPending ? <p className="status">Loading weather data...</p> : null}
+      {weatherQuery.isPending ? <ChartSkeleton /> : null}
       {weatherQuery.isError ? <p className="status status-error">{errorMessage}</p> : null}
 
       {weatherQuery.data ? (
@@ -123,6 +126,12 @@ export default function App() {
             </p>
             <p>Total records: {weatherQuery.data.pagination.totalItems}</p>
           </div>
+
+          <ChartErrorBoundary>
+            <WeatherChart records={weatherQuery.data.data} />
+          </ChartErrorBoundary>
+
+          {weatherQuery.isFetching ? <p className="status">Refreshing data...</p> : null}
 
           <div className="table-wrap">
             <table>

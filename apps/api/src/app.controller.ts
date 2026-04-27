@@ -9,7 +9,7 @@ export class AppController {
       service: 'api',
       status: 'ok',
       message: 'Welcome to the Livecoding API',
-      healthEndpoint: '/health',
+      healthEndpoint: '/api/health',
     };
   }
 

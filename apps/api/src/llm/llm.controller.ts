@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req, Res } from '@nestjs/common';
+import { Controller, Get, Logger, Query, Req, Res } from '@nestjs/common';
 import { LlmStreamQueryDto } from './llm.dto';
 import { LlmService } from './llm.service';
 
@@ -17,6 +17,8 @@ interface SseResponse {
 
 @Controller('llm')
 export class LlmController {
+  private readonly logger = new Logger(LlmController.name);
+
   constructor(private readonly llmService: LlmService) {}
 
   @Get('stream')
@@ -25,6 +27,7 @@ export class LlmController {
     @Req() req: SseRequest,
     @Res() res: SseResponse,
   ): Promise<void> {
+    this.logger.log(`SSE stream request received promptLength=${query.prompt.length}`);
     res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache, no-transform');
     res.setHeader('Connection', 'keep-alive');
@@ -35,7 +38,10 @@ export class LlmController {
     }
 
     const abortController = new AbortController();
-    const onClose = () => abortController.abort();
+    const onClose = () => {
+      this.logger.warn('Client disconnected from SSE stream; aborting upstream request');
+      abortController.abort();
+    };
     req.on('close', onClose);
 
     try {
@@ -44,11 +50,13 @@ export class LlmController {
       });
 
       if (!abortController.signal.aborted) {
+        this.logger.log('SSE stream finished successfully');
         this.writeSseEvent(res, 'done', '');
       }
     } catch (error) {
       if (!abortController.signal.aborted) {
         const message = error instanceof Error ? error.message : 'Unknown streaming error';
+        this.logger.error(`SSE stream failed error=${message}`);
         this.writeSseEvent(res, 'error', message);
       }
     } finally {

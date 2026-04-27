@@ -11,6 +11,14 @@ export interface WeatherRecord {
   temperatureMin: number | null;
 }
 
+export interface WeatherQuery {
+  end: string;
+  location: string;
+  page?: number;
+  pageSize?: number;
+  start: string;
+}
+
 export interface WeatherResponse {
   data: WeatherRecord[];
   location: {

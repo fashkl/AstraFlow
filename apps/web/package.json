@@ -8,19 +8,23 @@
     "dev": "vite",
     "lint": "eslint \"src/**/*.{ts,tsx}\" \"vite.config.ts\"",
     "preview": "vite preview",
-    "test": "echo \"No tests for @livecoding/web yet\"",
+    "test": "jest --config jest.config.cjs --runInBand",
     "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.5",
     "@livecoding/shared": "workspace:*",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.14",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^4.3.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.5",
     "typescript": "^5.9.2",
     "vite": "^5.4.11"
   }

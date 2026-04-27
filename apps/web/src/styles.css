@@ -1,5 +1,6 @@
 :root {
-  color: #111827;
+  background: #f4f6f8;
+  color: #1f2937;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.5;
 }
@@ -8,16 +9,141 @@ body {
   margin: 0;
 }
 
-.container {
+.app-shell {
   margin: 0 auto;
-  max-width: 960px;
-  padding: 40px 20px;
+  max-width: 1200px;
+  padding: 32px 20px 48px;
 }
 
-h1 {
-  margin: 0 0 12px;
+.page-header {
+  margin-bottom: 24px;
 }
 
-p {
+.page-header h1 {
+  font-size: 1.75rem;
+  margin: 0 0 8px;
+}
+
+.page-header p {
+  color: #4b5563;
   margin: 0;
+}
+
+.query-panel,
+.result-panel {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.query-panel {
+  margin-bottom: 16px;
+}
+
+.query-form {
+  align-items: end;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.query-form label {
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 6px;
+}
+
+.query-form input,
+.query-form select {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font: inherit;
+  min-height: 36px;
+  padding: 0 10px;
+}
+
+.query-form button {
+  background: #0f766e;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  min-height: 36px;
+  padding: 0 14px;
+}
+
+.query-form button:hover {
+  background: #0d665f;
+}
+
+.status {
+  color: #374151;
+  margin: 0 0 16px;
+}
+
+.status-error {
+  color: #b91c1c;
+}
+
+.result-meta {
+  color: #374151;
+  display: grid;
+  gap: 2px;
+  margin-bottom: 14px;
+}
+
+.result-meta p {
+  margin: 0;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 620px;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.92rem;
+  padding: 10px 8px;
+  text-align: left;
+}
+
+thead th {
+  color: #334155;
+  font-weight: 600;
+}
+
+.pagination {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.pagination button {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #0f172a;
+  cursor: pointer;
+  font: inherit;
+  min-height: 34px;
+  min-width: 90px;
+  padding: 0 12px;
+}
+
+.pagination button:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
 }

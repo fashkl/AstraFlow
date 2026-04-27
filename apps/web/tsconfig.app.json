@@ -6,7 +6,8 @@
     "moduleResolution": "Bundler",
     "noEmit": true,
     "target": "ES2022",
-    "types": ["vite/client"]
+    "types": ["vite/client", "react", "react-dom"]
   },
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
   "include": ["src"]
 }

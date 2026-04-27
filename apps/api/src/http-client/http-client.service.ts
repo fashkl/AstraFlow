@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import CircuitBreaker from 'opossum';
 import {
   DEFAULT_HTTP_CLIENT_CONFIG,
@@ -19,6 +19,7 @@ interface HttpClientRequest {
 @Injectable()
 export class HttpClientService implements OnModuleDestroy {
   private consecutiveFailureCount = 0;
+  private readonly logger = new Logger(HttpClientService.name);
   private readonly breaker: CircuitBreaker<[HttpClientRequest], Response>;
 
   constructor(
@@ -39,36 +40,54 @@ export class HttpClientService implements OnModuleDestroy {
 
     this.breaker.on('open', () => {
       this.consecutiveFailureCount = 0;
+      this.logger.warn('Circuit transitioned to OPEN');
+    });
+
+    this.breaker.on('halfOpen', () => {
+      this.logger.log('Circuit transitioned to HALF_OPEN');
     });
 
     this.breaker.on('close', () => {
       this.consecutiveFailureCount = 0;
+      this.logger.log('Circuit transitioned to CLOSED');
     });
   }
 
   async getJson<T>(url: string, init?: RequestInit): Promise<T> {
+    const method = init?.method ?? 'GET';
+    this.logger.debug(`Dispatching request method=${method} url=${url}`);
+
     try {
       const response = await this.breaker.fire({
-        init: { ...init, method: init?.method ?? 'GET' },
+        init: { ...init, method },
         url,
       });
       this.consecutiveFailureCount = 0;
+      this.logger.debug(`Request succeeded method=${method} url=${url} status=${response.status}`);
       return (await response.json()) as T;
     } catch (error) {
       if (error instanceof RetryExhaustedError) {
         this.handleOperationFailure();
+        this.logger.warn(
+          `Request exhausted retries method=${method} url=${url} error=${this.describeError(error.cause)}`,
+        );
         throw error;
       }
 
       if (this.breaker.opened) {
+        this.logger.warn(`Request short-circuited by OPEN circuit method=${method} url=${url}`);
         throw new CircuitOpenError(undefined, error);
       }
 
+      this.logger.error(
+        `Request failed unexpectedly method=${method} url=${url} error=${this.describeError(error)}`,
+      );
       throw error;
     }
   }
 
   onModuleDestroy(): void {
+    this.logger.log('Shutting down circuit breaker');
     this.breaker.shutdown();
   }
 
@@ -76,6 +95,8 @@ export class HttpClientService implements OnModuleDestroy {
     const totalAttempts = this.config.retryDelaysMs.length + 1;
 
     for (let attempt = 0; ; attempt += 1) {
+      const attemptNumber = attempt + 1;
+      this.logger.debug(`HTTP attempt ${attemptNumber}/${totalAttempts} for url=${url}`);
       try {
         const response = await this.fetchFn(url, init);
         if (!response.ok) {
@@ -88,6 +109,9 @@ export class HttpClientService implements OnModuleDestroy {
         }
 
         const delayMs = this.getRetryDelayMs(this.config.retryDelaysMs[attempt] ?? 0);
+        this.logger.warn(
+          `Attempt ${attemptNumber} failed for url=${url}; retrying in ${delayMs}ms error=${this.describeError(error)}`,
+        );
         await this.sleep(delayMs);
       }
     }
@@ -115,9 +139,21 @@ export class HttpClientService implements OnModuleDestroy {
     }
 
     this.consecutiveFailureCount += 1;
+    this.logger.warn(
+      `Consecutive failures ${this.consecutiveFailureCount}/${this.config.failureThreshold}`,
+    );
     if (this.consecutiveFailureCount >= this.config.failureThreshold) {
       this.consecutiveFailureCount = 0;
+      this.logger.warn('Failure threshold reached; opening circuit');
       this.breaker.open();
     }
+  }
+
+  private describeError(error: unknown): string {
+    if (error instanceof Error) {
+      return `${error.name}: ${error.message}`;
+    }
+
+    return String(error);
   }
 }

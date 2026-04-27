@@ -1,0 +1,27 @@
+{
+  "name": "@livecoding/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"vite.config.ts\"",
+    "preview": "vite preview",
+    "test": "echo \"No tests for @livecoding/web yet\"",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"
+  },
+  "dependencies": {
+    "@livecoding/shared": "workspace:*",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.14",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "4.3.3",
+    "typescript": "^5.9.2",
+    "vite": "5.4.11"
+  }
+}

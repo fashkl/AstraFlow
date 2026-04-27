@@ -1,35 +1,5 @@
-import { Controller, Get, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
-@Controller()
-class RootController {
-  @Get()
-  index(): { service: 'api'; status: 'ok'; message: string; healthEndpoint: string } {
-    return {
-      service: 'api',
-      status: 'ok',
-      message: 'Welcome to the Livecoding API',
-      healthEndpoint: '/health',
-    };
-  }
-}
-
-@Controller('health')
-class HealthController {
-  @Get()
-  health(): { service: 'api'; status: 'ok'; timestamp: string } {
-    return {
-      service: 'api',
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-    };
-  }
-}
-
-@Module({
-  controllers: [RootController, HealthController],
-})
-class AppModule {}
+import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);

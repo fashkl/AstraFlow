@@ -20,4 +20,12 @@ module.exports = {
     'prettier',
   ],
   ignorePatterns: ['dist', 'coverage', 'node_modules'],
+  overrides: [
+    {
+      env: {
+        jest: true,
+      },
+      files: ['**/*.spec.ts'],
+    },
+  ],
 };

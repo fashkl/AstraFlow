@@ -6,6 +6,8 @@
     "build": "tsc -p tsconfig.build.json",
     "dev": "ts-node -r tsconfig-paths/register --transpile-only --project tsconfig.json src/main.ts",
     "lint": "eslint \"src/**/*.ts\"",
+    "test:integration": "jest --config jest.config.cjs --runInBand --runTestsByPath src/weather/weather.controller.spec.ts",
+    "test:unit": "jest --config jest.config.cjs --runInBand --runTestsByPath src/app.module.spec.ts src/http-client/http-client.service.spec.ts src/llm/llm.controller.spec.ts src/weather/weather.service.spec.ts",
     "test": "jest --config jest.config.cjs --runInBand",
     "typecheck": "tsc --noEmit -p tsconfig.spec.json"
   },

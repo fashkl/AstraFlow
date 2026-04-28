@@ -13,6 +13,8 @@
     "e2e:headed": "playwright test --headed",
     "e2e:ui": "playwright test --ui",
     "lint": "pnpm -r lint",
+    "test:integration": "pnpm --filter @livecoding/api test:integration",
+    "test:unit": "pnpm --filter @livecoding/web test && pnpm --filter @livecoding/api test:unit",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck"
   },

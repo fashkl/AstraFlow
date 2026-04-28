@@ -4,6 +4,7 @@ import { type FormEvent, useMemo, useState } from 'react';
 import { fetchWeather, WeatherApiError } from './api/weather-client';
 import { ChartErrorBoundary } from './components/chart-error-boundary';
 import { ChartSkeleton } from './components/chart-skeleton';
+import { StreamingChat } from './components/streaming-chat';
 import { WeatherChart } from './components/weather-chart';
 
 const PAGE_SIZE_OPTIONS = [25, 50, 100, 200] as const;
@@ -181,6 +182,7 @@ export default function App() {
           </div>
         </section>
       ) : null}
+      <StreamingChat />
     </main>
   );
 }

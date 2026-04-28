@@ -4,7 +4,6 @@ coverage
 .DS_Store
 .env
 .env.local
-pnpm-lock.yaml
 .idea
 .claude
 playwright-report

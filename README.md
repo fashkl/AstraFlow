@@ -37,8 +37,8 @@ astraflow/
 
 1. `Step 1` Monorepo scaffold with shared TS + lint setup
 2. `Step 2` Resilient HTTP client module (retry/circuit-breaker/error types)
-3. `Step 3` Weather module (`GET /api/weather`) with validation + pagination
-4. `Step 4` LLM streaming module (`GET /api/llm/stream`) via SSE
+3. `Step 3` Weather module (`GET /api/v1/weather`) with validation + pagination
+4. `Step 4` LLM streaming module (`GET /api/v1/llm/stream`) via SSE
 5. `Step 5` Typed frontend API layer + React Query
 6. `Step 6` Recharts weather visualization + UI error boundary + loading skeleton
 7. `Step 7` Streaming UI (`useStream` hook + abort behavior)
@@ -82,12 +82,12 @@ Stop servers with `Ctrl + C` in each running terminal.
 
 ### Health and Root
 
-- `GET /api` returns API welcome payload
-- `GET /api/health` returns service health with timestamp
+- `GET /api/v1` returns API welcome payload
+- `GET /api/v1/health` returns service health with timestamp
 
 ### Weather
 
-- `GET /api/weather`
+- `GET /api/v1/weather`
 
 Query params:
 
@@ -100,12 +100,12 @@ Query params:
 Example:
 
 ```bash
-curl "http://127.0.0.1:3000/api/weather?location=25.2048,55.2708&start=2024-01-01&end=2024-01-07&page=1&pageSize=5"
+curl "http://127.0.0.1:3000/api/v1/weather?location=25.2048,55.2708&start=2024-01-01&end=2024-01-07&page=1&pageSize=5"
 ```
 
 ### LLM Streaming (SSE)
 
-- `GET /api/llm/stream?prompt=...`
+- `GET /api/v1/llm/stream?prompt=...`
 
 Notes:
 

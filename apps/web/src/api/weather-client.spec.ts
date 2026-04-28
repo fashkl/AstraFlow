@@ -50,7 +50,7 @@ describe('weather-client', () => {
     expect(result).toEqual(payload);
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
-      '/api/weather?end=2024-01-31&location=25.2%2C55.3&page=2&pageSize=25&start=2024-01-01',
+      '/api/v1/weather?end=2024-01-31&location=25.2%2C55.3&page=2&pageSize=25&start=2024-01-01',
       { headers: { Accept: 'application/json' } },
     );
   });
@@ -117,6 +117,8 @@ describe('weather-client', () => {
         location: '25.2,55.3',
         start: '2024-01-01',
       }),
-    ).toBe('/api/weather?end=2024-01-31&location=25.2%2C55.3&page=1&pageSize=50&start=2024-01-01');
+    ).toBe(
+      '/api/v1/weather?end=2024-01-31&location=25.2%2C55.3&page=1&pageSize=50&start=2024-01-01',
+    );
   });
 });

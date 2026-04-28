@@ -30,7 +30,7 @@ test.describe('Weather + Streaming E2E', () => {
   test('happy path: user loads date range and chart renders with data', async ({ page }) => {
     const weatherRequests: string[] = [];
 
-    await page.route('**/api/weather?*', async (route) => {
+    await page.route('**/api/v1/weather?*', async (route) => {
       weatherRequests.push(route.request().url());
       await route.fulfill({
         contentType: 'application/json',
@@ -55,7 +55,7 @@ test.describe('Weather + Streaming E2E', () => {
   });
 
   test('streaming path: tokens appear incrementally in the UI', async ({ page }) => {
-    await page.route('**/api/weather?*', async (route) => {
+    await page.route('**/api/v1/weather?*', async (route) => {
       await route.fulfill({
         contentType: 'application/json',
         status: 200,
@@ -109,7 +109,7 @@ test.describe('Weather + Streaming E2E', () => {
   });
 
   test('error path: API down state is visible to the user', async ({ page }) => {
-    await page.route('**/api/weather?*', async (route) => {
+    await page.route('**/api/v1/weather?*', async (route) => {
       await route.abort('failed');
     });
 

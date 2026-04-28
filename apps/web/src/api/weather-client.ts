@@ -39,7 +39,7 @@ export function buildWeatherUrl(query: WeatherQuery): string {
     start: query.start,
   });
 
-  return `/api/weather?${search.toString()}`;
+  return `/api/v1/weather?${search.toString()}`;
 }
 
 export async function fetchWeather(

@@ -8,8 +8,8 @@ export class AppController {
     return {
       service: 'api',
       status: 'ok',
-      message: 'Welcome to the Livecoding API',
-      healthEndpoint: '/api/health',
+      message: 'Welcome to the AstraFlow API',
+      healthEndpoint: '/api/v1/health',
     };
   }
 

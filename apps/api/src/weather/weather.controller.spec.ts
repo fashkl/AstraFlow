@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import type { INestApplication } from '@nestjs/common';
 import request from 'supertest';
@@ -52,6 +52,10 @@ describe('WeatherController (integration)', () => {
 
     app = moduleRef.createNestApplication();
     app.setGlobalPrefix('api');
+    app.enableVersioning({
+      defaultVersion: '1',
+      type: VersioningType.URI,
+    });
     app.useGlobalPipes(
       new ValidationPipe({
         forbidNonWhitelisted: true,
@@ -70,7 +74,7 @@ describe('WeatherController (integration)', () => {
     fetchFn.mockResolvedValue(buildArchiveResponse());
 
     const response = await request(app.getHttpServer())
-      .get('/api/weather')
+      .get('/api/v1/weather')
       .query({
         end: '2026-01-03',
         location: '25.2048,55.2708',
@@ -107,7 +111,7 @@ describe('WeatherController (integration)', () => {
 
   it('returns 400 for DTO validation failures', async () => {
     const response = await request(app.getHttpServer())
-      .get('/api/weather')
+      .get('/api/v1/weather')
       .query({
         end: '2026-01-03',
         location: 'invalid-location',
@@ -121,7 +125,7 @@ describe('WeatherController (integration)', () => {
 
   it('returns 400 for logical date-range edge cases', async () => {
     await request(app.getHttpServer())
-      .get('/api/weather')
+      .get('/api/v1/weather')
       .query({
         end: '2026-01-01',
         location: '25.2,55.3',
@@ -133,7 +137,7 @@ describe('WeatherController (integration)', () => {
       });
 
     await request(app.getHttpServer())
-      .get('/api/weather')
+      .get('/api/v1/weather')
       .query({
         end: '2026-02-30',
         location: '25.2,55.3',
@@ -154,17 +158,17 @@ describe('WeatherController (integration)', () => {
       start: '2026-01-01',
     };
 
-    await request(app.getHttpServer()).get('/api/weather').query(query).expect(503).expect({
+    await request(app.getHttpServer()).get('/api/v1/weather').query(query).expect(503).expect({
       code: 'WEATHER_UPSTREAM_UNAVAILABLE',
       message: 'Weather upstream is unavailable',
     });
 
-    await request(app.getHttpServer()).get('/api/weather').query(query).expect(503).expect({
+    await request(app.getHttpServer()).get('/api/v1/weather').query(query).expect(503).expect({
       code: 'WEATHER_UPSTREAM_UNAVAILABLE',
       message: 'Weather upstream is unavailable',
     });
 
-    await request(app.getHttpServer()).get('/api/weather').query(query).expect(503).expect({
+    await request(app.getHttpServer()).get('/api/v1/weather').query(query).expect(503).expect({
       code: 'WEATHER_UPSTREAM_CIRCUIT_OPEN',
       message: 'Weather upstream circuit is open',
     });
@@ -181,7 +185,7 @@ describe('WeatherController (integration)', () => {
     );
 
     await request(app.getHttpServer())
-      .get('/api/weather')
+      .get('/api/v1/weather')
       .query({
         end: '2026-01-03',
         location: '25.2,55.3',

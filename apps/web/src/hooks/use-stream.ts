@@ -33,7 +33,7 @@ export function useStream(): UseStreamResult {
     setError(null);
     setStatus('streaming');
 
-    const url = `/api/llm/stream?${new URLSearchParams({ prompt }).toString()}`;
+    const url = `/api/v1/llm/stream?${new URLSearchParams({ prompt }).toString()}`;
     const es = new EventSource(url);
     esRef.current = es;
 

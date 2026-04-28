@@ -9,11 +9,16 @@
     "dev": "pnpm -r --parallel dev",
     "dev:api": "pnpm --filter @livecoding/api dev",
     "dev:web": "pnpm --filter @livecoding/web dev",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:ui": "playwright test --ui",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck"
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.6.0",
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@typescript-eslint/parser": "^8.35.1",
     "eslint": "^8.57.1",

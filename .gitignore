@@ -7,3 +7,5 @@ coverage
 pnpm-lock.yaml
 .idea
 .claude
+playwright-report
+test-results

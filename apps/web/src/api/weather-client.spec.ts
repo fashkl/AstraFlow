@@ -1,4 +1,4 @@
-import type { WeatherResponse } from '@livecoding/shared';
+import type { WeatherResponse } from '@astraflow/shared';
 import { buildWeatherUrl, fetchWeather, WeatherApiError } from './weather-client';
 
 describe('weather-client', () => {

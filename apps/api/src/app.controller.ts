@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import type { HealthStatus } from '@livecoding/shared';
+import type { HealthStatus } from '@astraflow/shared';
 
 @Controller()
 export class AppController {

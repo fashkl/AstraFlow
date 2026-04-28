@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { type WeatherResponse } from '@livecoding/shared';
+import { type WeatherResponse } from '@astraflow/shared';
 import { WeatherQueryDto } from './weather.dto';
 import { WeatherService } from './weather.service';
 

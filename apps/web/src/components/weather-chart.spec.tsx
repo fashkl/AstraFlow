@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 import '@testing-library/jest-dom';
-import type { WeatherRecord } from '@livecoding/shared';
+import type { WeatherRecord } from '@astraflow/shared';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { ChartErrorBoundary } from './chart-error-boundary';

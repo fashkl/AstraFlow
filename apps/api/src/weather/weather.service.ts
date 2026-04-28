@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, Logger, ServiceUnavailableException } from '@nestjs/common';
-import { type WeatherRecord, type WeatherResponse } from '@livecoding/shared';
+import { type WeatherRecord, type WeatherResponse } from '@astraflow/shared';
 import { CircuitOpenError, RetryExhaustedError } from '../http-client/http-client.errors';
 import { HttpClientService } from '../http-client/http-client.service';
 import { WeatherQueryDto } from './weather.dto';

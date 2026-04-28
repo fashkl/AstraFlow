@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import type { WeatherQuery } from '@livecoding/shared';
+import type { WeatherQuery } from '@astraflow/shared';
 import { type FormEvent, useMemo, useState } from 'react';
 import { fetchWeather, WeatherApiError } from './api/weather-client';
 import { ChartErrorBoundary } from './components/chart-error-boundary';

@@ -48,7 +48,7 @@ A full-stack monorepo project simulating real-world production patterns:
 ## Monorepo Structure
 
 ```
-livecoding/
+astraflow/
 ├── apps/
 │   ├── api/          # NestJS backend
 │   └── web/          # React + Vite frontend

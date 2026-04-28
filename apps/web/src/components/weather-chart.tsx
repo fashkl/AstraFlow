@@ -1,4 +1,4 @@
-import type { WeatherRecord } from '@livecoding/shared';
+import type { WeatherRecord } from '@astraflow/shared';
 import {
   CartesianGrid,
   Legend,

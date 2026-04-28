@@ -1,4 +1,4 @@
-import type { WeatherQuery, WeatherResponse } from '@livecoding/shared';
+import type { WeatherQuery, WeatherResponse } from '@astraflow/shared';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 50;
